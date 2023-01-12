@@ -5,3 +5,7 @@ spring:
   freemarker:
     template-loader-path: classpath:/templates
     suffix: .ftl
+
+  mvc: # swagger와 springboot 버전 차이로 인한 추가구문
+    pathmatch:
+      matching-strategy: ant_path_matcher
