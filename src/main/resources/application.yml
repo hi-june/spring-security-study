@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    include: local #, private, oauth
+
+  freemarker:
+    template-loader-path: classpath:/templates
+    suffix: .ftl
