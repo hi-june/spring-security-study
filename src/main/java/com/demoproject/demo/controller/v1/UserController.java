@@ -1,5 +1,6 @@
 package com.demoproject.demo.controller.v1;
 
+import com.demoproject.demo.advice.exception.UserNotFoundCException;
 import com.demoproject.demo.entity.User;
 import com.demoproject.demo.model.response.CommonResult;
 import com.demoproject.demo.model.response.ListResult;
@@ -24,9 +25,26 @@ public class UserController {
 
     @ApiOperation(value = "회원 단건 검색", notes = "userId로 회원을 조회합니다.")
     @GetMapping("/user/{userId}")
-    public SingleResult<User> findUserByKey(@ApiParam(value = "회원 ID", required = true) @RequestParam Long userId) {
+    public SingleResult<User> findUserById(@ApiParam(value = "회원 ID", required = true) @PathVariable Long userId) throws Exception{
         return responseService
-                .getSingleResult(userJpaRepo.findById(userId).orElse(null));
+                .getSingleResult(userJpaRepo.findById(userId).orElseThrow(UserNotFoundCException::new)); // null이 아니라 예외가 터지도록 수정
+                //.getSingleResult(userJpaRepo.findById(userId).orElse(null));
+    }
+
+    @ApiOperation(value = "회원 단건 검색 (이메일)", notes = "이메일로 회원을 조회합니다.")
+    @GetMapping("/user/email/{email}")
+    public SingleResult<User> findUserByEmail(@ApiParam(value = "회원 이메일", required = true) @PathVariable String email) {
+        User user = userJpaRepo.findByEmail(email);
+        if (user == null) throw new UserNotFoundCException();
+        return responseService.getSingleResult(user);
+    }
+
+    @ApiOperation(value = "회원 검색 (이름)", notes = "이름으로  회원을 검색합니다.")
+    @GetMapping("/findUserByName/{name}")
+    public SingleResult<User> findUserByName(@ApiParam(value = "회원 이름", required = true) @PathVariable String name) {
+        User user = userJpaRepo.findByName(name);
+        if (user == null) throw new UserNotFoundCException();
+        return responseService.getSingleResult(user);
     }
 
     @ApiOperation(value = "회원 목록 조회", notes = "모든 회원을 조회합니다.")   // value는 소제목, notes는 세부 내용 설명
@@ -70,20 +88,4 @@ public class UserController {
         userJpaRepo.deleteById(userId);
         return responseService.getSuccessResult();
     }
-
-    /*
-    @ApiOperation(value = "회원 검색 (이름)", notes = "이름으로  회원을 검색합니다.")
-    @GetMapping("/findUserByName/{name}")
-    public User findUserByName(@ApiParam(value = "회원 이름", required = true) @PathVariable String name) {
-        // @PathVariable: http 메소드에서 매칭되는 request parameter 값이 자동으로 들어감
-        // 쿼리가 아니라 url에 추가되어서 전달된다.
-        return userJpaRepo.findByName(name);
-    }
-
-    @ApiOperation(value = "회원 검색 (이메일)", notes = "이메일로 회원을 검색합니다.")
-    @GetMapping("/findUserByEmail/{email}")
-    public User findUserByEmail(@ApiParam(value = "회원 이메일", required = true) @PathVariable String email) {
-        return userJpaRepo.findByEmail(email);
-    }
-    */
 }
