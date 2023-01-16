@@ -1,5 +1,6 @@
 package com.demoproject.demo.entity;
 
+import com.demoproject.demo.domain.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor  // 인자가 있는, 필드의 모든 값을 인자로 갖는 생성자를 만들어줌
 @Table(name = "user")   // 엔티티를 테이블과 매핑하기 위해 테이블을 지정해주는 것
-public class User {
+public class User extends BaseTimeEntity {
     @Id // primary key임을 명시
     @GeneratedValue(strategy = GenerationType.IDENTITY) // pk 값의 생성을 db에 위임
     private Long userId;
