@@ -27,6 +27,9 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger2:2.6.1'
 	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
 
+	// 메시지 다국화 i18n 의존성 추가
+	implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
