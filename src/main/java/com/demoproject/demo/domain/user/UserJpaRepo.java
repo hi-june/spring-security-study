@@ -1,6 +1,6 @@
-package com.demoproject.demo.repository;
+package com.demoproject.demo.domain.user;
 
-import com.demoproject.demo.entity.User;
+import com.demoproject.demo.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

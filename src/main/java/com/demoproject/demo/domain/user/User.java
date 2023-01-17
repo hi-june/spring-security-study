@@ -1,4 +1,4 @@
-package com.demoproject.demo.entity;
+package com.demoproject.demo.domain.user;
 
 import com.demoproject.demo.domain.BaseTimeEntity;
 import lombok.*;
