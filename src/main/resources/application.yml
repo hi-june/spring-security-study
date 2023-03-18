@@ -6,10 +6,11 @@ spring:
     template-loader-path: classpath:/templates
     suffix: .ftl
 
-  mvc: # swagger와 springboot 버전 차이로 인한 추가구문
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
   messages:
     basename: i18n/exception  # "resources/i18n/" path에서 exception_locale.yml을 참조하라는 뜻
     encoding: UTF-8
+
+springdoc:
+  packages-to-scan: com.demoproject.demo
+  swagger-ui:
+    path: demo-ui.html  # # Swagger UI 경로 => localhost:8000/demo-ui.html
